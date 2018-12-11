@@ -14,6 +14,10 @@ let game = {
     setEnemy: function(enemy) {
         this.curEnemy = enemy;
         console.log(this.curEnemy);
+    },
+
+    log: function(msg) {
+        console.log(msg);
     }
 }
 
