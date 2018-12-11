@@ -84,3 +84,4 @@ let cardLibrary = {
 }
 
 cardLibrary.heal.effect();
+console.log(player.health);
