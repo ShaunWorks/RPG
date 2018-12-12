@@ -19,9 +19,9 @@ let cardElement = {
     ICE: 4,
 
     properties: {
-        1: {},
-        2: { name: "medium", value: 2, code: "M" },
-        3: { name: "large", value: 3, code: "L" },
+        1: { icon: "fas fa-snowflake", color: "skyblue" },
+        2: { icon: "fas fa-snowflake", color: "skyblue" },
+        3: { icon: "fas fa-snowflake", color: "skyblue" },
         4: { icon: "fas fa-snowflake", color: "skyblue" }
     }
 }
@@ -87,28 +87,40 @@ let cardLibrary = {
             console.log("");
         }
     ),
-
 }
 
 let curCard = cardLibrary.frost;
 console.log(cardElement.properties[curCard.element]);
 
-let c = $(
-    `<div class="card m-0" style="width:120px;">
+$(document).ready(function () {
+    $("#cardsInHand").on("click", ".card", function () {
+        console.log("this is a card");
+    });
+
+    $("#draw").on("click", function () {
+        displayCard(player.deck[0]);
+    });
+
+    for (let i = 0; i < 6; i++) {
+        displayCard(player.deck[i]);
+    }
+});
+
+function displayCard(card) {
+    let c =
+        `<div class="card m-0" style="width:120px;">
         <img class="card-img-top" src="https://via.placeholder.com/120x70" alt="Card image cap">
         <div class="card-body p-0">
-            <p class="card-title text-center m-0">${curCard.name}</p>
+            <p class="card-title text-center m-0">${card.name}</p>
             <hr class="mx-2 my-0">
             <div class="d-flex align-items-center justify-content-around mx-4">
-                <i class="${cardElement.properties[curCard.element].icon}" style="font-size:20px; color:${cardElement.properties[curCard.element].color}"></i>
+                <i class="${cardElement.properties[card.element].icon}" style="font-size:20px; color:${cardElement.properties[card.element].color}"></i>
                 <p class="card-text text-center" style="font-size:20px;">3</p>
             </div>
         </div>
-    </div>`);
+    </div>`;
+    console.log(c);
+    $("#cardsInHand").append(c);
+}
 
 
-console.log(c);
-
-$(document).ready(function(){
-    $("body").append(c);
-});
