@@ -89,26 +89,10 @@ let cardLibrary = {
     ),
 }
 
-let curCard = cardLibrary.frost;
-console.log(cardElement.properties[curCard.element]);
-
-$(document).ready(function () {
-    $("#cardsInHand").on("click", ".card", function () {
-        console.log("this is a card");
-    });
-
-    $("#draw").on("click", function () {
-        displayCard(player.deck[0]);
-    });
-
-    for (let i = 0; i < 6; i++) {
-        displayCard(player.deck[i]);
-    }
-});
-
+let cardId = 0;
 function displayCard(card) {
     let c =
-        `<div class="card m-0" style="width:120px;">
+        `<div class="card m-0" effect="${card.effect}" style="width:120px;">
         <img class="card-img-top" src="https://via.placeholder.com/120x70" alt="Card image cap">
         <div class="card-body p-0">
             <p class="card-title text-center m-0">${card.name}</p>
@@ -119,8 +103,9 @@ function displayCard(card) {
             </div>
         </div>
     </div>`;
-    console.log(c);
+    $(c).data("foo", function() {console.log("this is a func")});
     $("#cardsInHand").append(c);
+    cardId++;
 }
 
 
