@@ -16,7 +16,14 @@ let cardElement = {
     NEUTRAL: 1,
     FIRE: 2,
     WATER: 3,
-    ICE: 4
+    ICE: 4,
+
+    properties: {
+        1: {},
+        2: { name: "medium", value: 2, code: "M" },
+        3: { name: "large", value: 3, code: "L" },
+        4: { icon: "fas fa-snowflake", color: "skyblue" }
+    }
 }
 
 let cardLibrary = {
@@ -70,7 +77,7 @@ let cardLibrary = {
             game.log("Player healed 3 damaged");
         }
     ),
-    
+
     counter: new Card(
         "Counter",
         "Block a neutral attack deal 4 damage",
@@ -83,5 +90,25 @@ let cardLibrary = {
 
 }
 
-cardLibrary.heal.effect();
-console.log(player.health);
+let curCard = cardLibrary.frost;
+console.log(cardElement.properties[curCard.element]);
+
+let c = $(
+    `<div class="card m-0" style="width:120px;">
+        <img class="card-img-top" src="https://via.placeholder.com/120x70" alt="Card image cap">
+        <div class="card-body p-0">
+            <p class="card-title text-center m-0">${curCard.name}</p>
+            <hr class="mx-2 my-0">
+            <div class="d-flex align-items-center justify-content-around mx-4">
+                <i class="${cardElement.properties[curCard.element].icon}" style="font-size:20px; color:${cardElement.properties[curCard.element].color}"></i>
+                <p class="card-text text-center" style="font-size:20px;">3</p>
+            </div>
+        </div>
+    </div>`);
+
+
+console.log(c);
+
+$(document).ready(function(){
+    $("body").append(c);
+});
