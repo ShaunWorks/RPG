@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     player.shuffleAndFill();
     $("#cardsInHand").on("click", ".card", function () {
-        console.log($(this).data("foo"));
+        cl[$(this).attr("card-id")].effect();
         $(this).remove(); 
     });
 

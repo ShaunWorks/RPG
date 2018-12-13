@@ -89,10 +89,9 @@ let cardLibrary = {
     ),
 }
 
-let cardId = 0;
 function displayCard(card) {
     let c =
-        `<div class="card m-0" effect="${card.effect}" style="width:120px;">
+        `<div class="card m-0" card-id='${card.name.toLowerCase()}' style="width:120px;">
         <img class="card-img-top" src="https://via.placeholder.com/120x70" alt="Card image cap">
         <div class="card-body p-0">
             <p class="card-title text-center m-0">${card.name}</p>
@@ -103,9 +102,7 @@ function displayCard(card) {
             </div>
         </div>
     </div>`;
-    $(c).data("foo", function() {console.log("this is a func")});
     $("#cardsInHand").append(c);
-    cardId++;
 }
 
 
