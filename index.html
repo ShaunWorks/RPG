@@ -20,6 +20,12 @@
         .card {
             display: inline-block;
         }
+
+        .enemy {
+            width: 120px;
+            border-radius: 5px;
+            border: black solid 1px;
+        }
     </style>
 </head>
 
@@ -27,6 +33,7 @@
     <div class="container">
         <div id="myCharater">
             Your Character
+            <button id="draw">draw</button>
         </div>
         <div>
             Cards in hand
@@ -57,9 +64,17 @@
             </div>
         </div>
         <div id="currentEnemy">
-            Enemy
-            <button id="draw">draw</button>
+            Enemy:
+            <div class="enemy my-1">
+                <h4 class="text-center my-auto" id="enemy-name">dsir frosty</h4>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" id="enemy-health" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                        aria-valuemax="100">Health: 1/1</div>
+                </div>
+            </div>
         </div>
+        <br>
+
     </div>
 
 </body>

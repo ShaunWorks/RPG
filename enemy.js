@@ -1,6 +1,7 @@
-function Enemy (name, health, attack, type, skill) {
+function Enemy (name, health, maxHealth, attack, type, skill) {
     this.name = name;
     this.health = health;
+    this.maxHealth = maxHealth;
     this.attack = attack;
     this.type = type;
     this.skill = skill;
@@ -17,6 +18,7 @@ let bestiary = {
     unibat: new Enemy (
         "Unibat", 
         8, 
+        8,
         2, 
         enemyType.NEUTRAL,
         function skill () {
@@ -26,7 +28,8 @@ let bestiary = {
 
     sirFrosty: new Enemy (
         "Sir Frosty", 
-        8, 
+        8,
+        9,
         2, 
         enemyType.ICE,
         function skill () {
@@ -35,4 +38,7 @@ let bestiary = {
     )
 }
 
-//game.setEnemy(unibat);
+function displayEnemy(enemy) {
+    $("#enemy-name").html(enemy.name);
+    $("#enemy-health").html(`Health: ${enemy.health}/${enemy.maxHealth}`);
+}

@@ -77,16 +77,6 @@ let cardLibrary = {
             game.log("Player healed 3 damaged");
         }
     ),
-
-    counter: new Card(
-        "Counter",
-        "Block a neutral attack deal 4 damage",
-        cardType.STATUS,
-        cardElement.NEUTRAL,
-        function effect() {
-            console.log("");
-        }
-    ),
 }
 
 function displayCard(card) {

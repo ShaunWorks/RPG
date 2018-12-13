@@ -23,19 +23,23 @@ let player = {
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
-
         this.curDeck = array;
     }
 }
 
 let game = {
-    lowLevelEnemies: [],
-    midLevelEnemies: [],
-    highLevelEnemies: [],
+    enemies: [],
     curEnemy: null,
+    fillEnemies: function () {
+        $.each(bestiary, function (key, value) {
+            game.enemies.push(value);
+        });
+        console.log(this.enemies);
+    },
 
     setEnemy: function (enemy) {
         this.curEnemy = enemy;
+        displayEnemy(enemy);
         console.log(this.curEnemy);
     },
 
@@ -45,15 +49,21 @@ let game = {
 }
 
 $(document).ready(function () {
+    startGame();
+});
 
+function startGame() {
+    game.fillEnemies();
     player.shuffleAndFill();
+
+game.setEnemy(game.enemies[1]);
+
     $("#cardsInHand").on("click", ".card", function () {
         cl[$(this).attr("card-id")].effect();
-        $(this).remove(); 
+        $(this).remove();
     });
 
     $("#draw").on("click", function () {
-        console.log($("#cardsInHand .card").length, player.handSize);
         if ($("#cardsInHand .card").length < player.handSize) {
             if (player.curDeck.length !== 0) {
                 displayCard(player.curDeck.pop());
@@ -65,4 +75,4 @@ $(document).ready(function () {
         }
     });
 
-});
+}
