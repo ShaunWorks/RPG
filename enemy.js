@@ -29,7 +29,7 @@ let bestiary = {
     sirFrosty: new Enemy (
         "Sir Frosty", 
         8,
-        9,
+        8,
         2, 
         enemyType.ICE,
         function skill () {
@@ -40,5 +40,10 @@ let bestiary = {
 
 function displayEnemy(enemy) {
     $("#enemy-name").html(enemy.name);
-    $("#enemy-health").html(`Health: ${enemy.health}/${enemy.maxHealth}`);
+    updateEnemyHealth(enemy);
+}
+
+function updateEnemyHealth(enemy) {
+    $("#enemy-health-text").text(`Health: ${enemy.health}/${enemy.maxHealth}`);
+    $("#enemy-health-bar").attr("style", `width: ${enemy.health / enemy.maxHealth * 100}%`);
 }

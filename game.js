@@ -24,6 +24,23 @@ let player = {
             array[randomIndex] = temporaryValue;
         }
         this.curDeck = array;
+    },
+
+    draw: function () {
+        if ($("#cardsInHand .card").length < player.handSize) {
+            if (player.curDeck.length !== 0) {
+                displayCard(player.curDeck.pop());
+            }
+            else {
+                player.shuffleAndFill();
+                displayCard(player.curDeck.pop());
+            }
+        }
+    },
+
+    updatePlayerHealth: function () {
+        $("#player-health-text").text(`Health: ${this.health}/${this.maxHealth}`);
+        $("#player-health-bar").attr("style", `width: ${this.health / this.maxHealth * 100}%`);
     }
 }
 
@@ -43,6 +60,49 @@ let game = {
         console.log(this.curEnemy);
     },
 
+    damageCalc: function (strength, element) {
+        let damage = strength * this.weaknessCalc(element);
+        this.curEnemy.health -= damage;
+        updateEnemyHealth(this.curEnemy);
+    },
+
+    weaknessCalc: function (element) {
+        switch (element) {
+            case 1:
+                return 1;
+            case 2:
+                switch (game.curEnemy.type) {
+                    case 3:
+                        return 0.5;
+                    case 4:
+                        return 1.5;
+                    default:
+                        return 1;
+                }
+            case 3:
+                switch (game.curEnemy.type) {
+                    case 4:
+                        return 0.5;
+                    case 2:
+                        return 1.5;
+                    default:
+                        return 1;
+                }
+            case 4:
+                switch (game.curEnemy.type) {
+                    case 2:
+                        return 0.5;
+                    case 3:
+                        return 1.5;
+                    default:
+                        return 1;
+                }
+            default:
+                console.log("problem, chief");
+                break;
+        }
+    },
+
     log: function (msg) {
         console.log(msg);
     }
@@ -50,29 +110,25 @@ let game = {
 
 $(document).ready(function () {
     startGame();
+    $("body").tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 });
+
 
 function startGame() {
     game.fillEnemies();
     player.shuffleAndFill();
+    player.updatePlayerHealth();
+    game.setEnemy(game.enemies[1]);
 
-game.setEnemy(game.enemies[1]);
+
 
     $("#cardsInHand").on("click", ".card", function () {
         cl[$(this).attr("card-id")].effect();
         $(this).remove();
     });
 
-    $("#draw").on("click", function () {
-        if ($("#cardsInHand .card").length < player.handSize) {
-            if (player.curDeck.length !== 0) {
-                displayCard(player.curDeck.pop());
-            }
-            else {
-                player.shuffleAndFill();
-                displayCard(player.curDeck.pop());
-            }
-        }
-    });
+    $("#draw").on("click", player.draw);
 
 }
