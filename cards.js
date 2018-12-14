@@ -80,7 +80,10 @@ let cardLibrary = {
         cardElement.NEUTRAL,
         function effect() {
             player.health += 3;
-            game.log("Player healed 3 damaged");
+            if(player.health > player.maxHealth)
+                player.health = player.maxHealth;
+            player.updatePlayerHealth();
+            game.log("Player healed 3 health");
         }
     ),
 }

@@ -4,8 +4,10 @@ let player = {
     maxHealth: 15,
     health: 15,
     handSize: 6,
-    deck: [cl.slash, cl.slash, cl.sizzle, cl.sizzle, cl.frost, cl.frost, cl.douse, cl.douse],
+    deck: [cl.slash, cl.slash, cl.sizzle, cl.sizzle, cl.frost, cl.frost, cl.douse, cl.douse, cl.heal, cl.heal],
     curDeck: [],
+    maxEnergy: 4,
+    energy: 4,
 
     shuffleAndFill: function () {
         let array = this.deck.slice(0);
@@ -57,12 +59,13 @@ let game = {
     setEnemy: function (enemy) {
         this.curEnemy = enemy;
         displayEnemy(enemy);
-        console.log(this.curEnemy);
     },
 
     damageCalc: function (strength, element) {
         let damage = strength * this.weaknessCalc(element);
         this.curEnemy.health -= damage;
+        if(this.curEnemy.health < 0)
+            this.curEnemy.health = 0;
         updateEnemyHealth(this.curEnemy);
         this.log(`Player dealt ${damage} damage to ${this.curEnemy.name}`);
     },
@@ -106,6 +109,11 @@ let game = {
 
     log: function (msg) {
         $("#game-log").prepend(`<p>${msg}</p>`);
+    },
+
+    endTurn: function () {
+        player.health -= game.curEnemy.attack;
+        player.updatePlayerHealth();
     }
 }
 
@@ -121,16 +129,19 @@ function startGame() {
     game.fillEnemies();
     player.shuffleAndFill();
     player.updatePlayerHealth();
-    game.setEnemy(game.enemies[1]);
-
-
+    game.setEnemy(game.enemies[0]);
 
     $("#cardsInHand").on("click", ".card", function () {
-        cl[$(this).attr("card-id")].effect();
-        $(this).tooltip('dispose');
-        $(this).remove();
+        if (player.energy > 0) {
+            cl[$(this).attr("card-id")].effect();
+            $(this).tooltip('dispose');
+            $(this).remove();
+            player.energy--;
+            $("#player-energy").text(`Energy: ${player.energy}/${player.maxEnergy}`);
+        }
     });
 
     $("#draw").on("click", player.draw);
+    $("#end-turn").on("click", game.endTurn);
 
 }
