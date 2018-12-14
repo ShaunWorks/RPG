@@ -64,6 +64,7 @@ let game = {
         let damage = strength * this.weaknessCalc(element);
         this.curEnemy.health -= damage;
         updateEnemyHealth(this.curEnemy);
+        this.log(`Player dealt ${damage} damage to ${this.curEnemy.name}`);
     },
 
     weaknessCalc: function (element) {
@@ -104,7 +105,7 @@ let game = {
     },
 
     log: function (msg) {
-        console.log(msg);
+        $("#game-log").prepend(`<p>${msg}</p>`);
     }
 }
 
@@ -126,6 +127,7 @@ function startGame() {
 
     $("#cardsInHand").on("click", ".card", function () {
         cl[$(this).attr("card-id")].effect();
+        $(this).tooltip('dispose');
         $(this).remove();
     });
 
